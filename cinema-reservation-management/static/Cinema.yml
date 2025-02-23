@@ -1,0 +1,698 @@
+openapi: 3.0.3
+info:
+  title: Cinema Reservation API
+  description: API for managing movies, rooms, reservations, and schedules
+  version: 1.0.0
+paths:
+  /movies:
+    post:
+      summary: Register a new movie
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+      responses:
+        '201':
+          description: Movie created successfully
+        '400':
+          description: Invalid movie data
+        '500':
+          description: Internal server error
+    get:
+      summary: Get all movies
+      responses:
+        '200':
+          description: List of movies
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Movie'
+        '404':
+          description: Movie not found
+        '500':
+          description: Internal server error
+  /movies/{id}:
+    get:
+      summary: Get movie by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Movie details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Movie'
+        '404':
+          description: Movie not found
+        '500':
+          description: Internal server error
+    put:
+      summary: Update a movie
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Movie'
+      responses:
+        '200':
+          description: Movie updated successfully
+        '400':
+          description: Invalid movie data
+        '404':
+          description: Movie not found
+        '500':
+          description: Internal server error
+    delete:
+      summary: Delete a movie
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Movie deleted successfully
+        '404':
+          description: Movie not found
+        '500':
+          description: Internal server error
+  /rooms:
+    post:
+      summary: Register a new room
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+      responses:
+        '201':
+          description: Room created successfully
+        '400':
+          description: Invalid room data
+        '500':
+          description: Internal server error
+    get:
+      summary: Get all rooms
+      responses:
+        '200':
+          description: List of rooms
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Room'
+        '404':
+          description: Room not found
+        '500':
+          description: Internal server error
+  /rooms/{id}:
+    get:
+      summary: Get room by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Movie details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Room'
+        '404':
+          description: Room not found
+        '500':
+          description: Internal server error
+    put:
+      summary: Update a room
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Room'
+      responses:
+        '200':
+          description: Room updated successfully
+        '400':
+          description: Invalid room data
+        '404':
+          description: Room not found
+        '500':
+          description: Internal server error
+    delete:
+      summary: Delete a room
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Room deleted successfully
+        '404':
+          description: Room not found
+        '500':
+          description: Internal server error
+  /schedules:
+    post:
+      summary: Create a new schedule
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule'
+      responses:
+        '201':
+          description: Schedule created successfully
+        '400':
+          description: Invalid schedule data
+        '500':
+          description: Internal server error
+    get:
+      summary: Get all schedules
+      responses:
+        '200':
+          description: List of schedules
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Schedule'
+        '404':
+          description: Schedules not found
+        '500':
+          description: Internal server error
+  /schedules/{id}:
+    get:
+      summary: Get schedule by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Schedule details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Schedule'
+        '404':
+          description: Schedule not found
+        '500':
+          description: Internal server error
+    put:
+      summary: Update a schedule
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Schedule'
+      responses:
+        '200':
+          description: Schedule updated successfully
+        '400':
+          description: Invalid schedule data
+        '404':
+          description: Schedule not found
+        '500':
+          description: Internal server error
+    delete:
+      summary: Delete a schedule
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Schedule deleted successfully
+        '404':
+          description: Schedule not found
+        '500':
+          description: Internal server error
+  /seats:
+    post:
+      summary: Create a new seat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Seat'
+      responses:
+        '201':
+          description: Seat created successfully
+        '400':
+          description: Invalid seat data
+        '500':
+          description: Internal server error
+    get:
+      summary: Get all seats
+      parameters:
+        - in: query
+          name: room
+          schema:
+            type: integer
+          description: Filter by room_id. If not specified, returns all resources.
+      responses:
+        '200':
+          description: List of seats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Seat'
+        '404':
+          description: Seats not found
+        '500':
+          description: Internal server error
+  /seats/{id}:
+    get:
+      summary: Get seat by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Seat details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Seat'
+        '404':
+          description: Seat not found
+        '500':
+          description: Internal server error
+    put:
+      summary: Update a seat
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Seat'
+      responses:
+        '200':
+          description: Seat updated successfully
+        '400':
+          description: Invalid seat data
+        '404':
+          description: Seat not found
+        '500':
+          description: Internal server error
+    delete:
+      summary: Delete a seat
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Seat deleted successfully
+        '404':
+          description: Seat not found
+        '500':
+          description: Internal server error
+  /seats/rooms/{room_id}:
+    delete:
+      summary: Delete a seats by room_id
+      parameters:
+        - in: path
+          name: room_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Seats deleted successfully
+        '404':
+          description: Room not found
+        '500':
+          description: Internal server error
+  /reservations:
+    post:
+      summary: Create a new reservation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reservation'
+      responses:
+        '201':
+          description: Reservation created successfully
+        '400':
+          description: Invalid reservation data
+        '500':
+          description: Internal server error
+    get:
+      summary: Get all reservations
+      responses:
+        '200':
+          description: List of reservations
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Reservation'
+        '404':
+          description: Reservations not found
+        '500':
+          description: Internal server error
+  /reservations/{id}:
+    get:
+      summary: Get reservation by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Reservation details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Reservation'
+        '404':
+          description: Reservation not found
+        '500':
+          description: Internal server error
+    put:
+      summary: Update a reservation
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Reservation'
+      responses:
+        '200':
+          description: Reservation updated successfully
+        '400':
+          description: Invalid reservation data
+        '404':
+          description: Reservation not found
+        '500':
+          description: Internal server error
+    delete:
+      summary: Delete a reservation
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Reservation deleted successfully
+        '404':
+          description: Reservation not found
+        '500':
+          description: Internal server error
+  /reserved-seats:
+    post:
+      summary: Create a new reserved seat
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservedSeat'
+      responses:
+        '201':
+          description: Reserved seat created successfully
+        '400':
+          description: Invalid reserved seat data
+        '500':
+          description: Internal server error
+    get:
+      summary: Get all reserved seats
+      responses:
+        '200':
+          description: List of reserved seats
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReservedSeat'
+        '404':
+          description: Reserved Seats not found
+        '500':
+          description: Internal server error
+  /reserved-seats/{id}:
+    get:
+      summary: Get reserved seat by ID
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Reserved seat details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReservedSeat'
+        '404':
+          description: Reserved seat not found
+        '500':
+          description: Internal server error
+    put:
+      summary: Update a reserved seat
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReservedSeat'
+      responses:
+        '200':
+          description: Reserved seat updated successfully
+        '400':
+          description: Invalid reserved seat data
+        '404':
+          description: Reserved seat not found
+        '500':
+          description: Internal server error
+    delete:
+      summary: Delete a reserved seat
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Reserved seat deleted successfully
+        '404':
+          description: Reserved seat not found
+        '500':
+          description: Internal server error
+  /reserved-seats/schedules/{schedule_id}:
+    get:
+      summary: Get reserved seats by schedule_id
+      parameters:
+        - in: path
+          name: schedule_id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: List of reserved seats by schedule_id
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Seat'
+        '404':
+          description: Reserved Seats not found
+        '500':
+          description: Internal server error
+  /notifications/emails:
+    post:
+      summary: Send an email
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                to:
+                  type: string
+                subject:
+                  type: string
+                body:
+                  type: string
+      responses:
+        '200':
+          description: Email sent successfully
+        '400':
+          description: Invalid email data
+        '500':
+          description: Internal server error
+components:
+  schemas:
+    Movie:
+      type: object
+      properties:
+        id:
+          type: integer
+        title:
+          type: string
+        genre:
+          type: string
+        duration:
+          type: integer
+          description: Duration in minutes
+        classification:
+          type: string
+      required:
+        - title
+        - genre
+        - duration
+        - classification
+    Room:
+      type: object
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        capacity:
+          type: integer
+      required:
+        - name
+        - capacity
+    Schedule:
+      type: object
+      properties:
+        id:
+          type: integer
+        movie_id:
+          type: integer
+        room_id:
+          type: integer
+        date_time:
+          type: string
+          pattern: "^\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}$"
+          example: "2025-02-23T03:34:12"
+      required:
+        - movie_id
+        - room_id
+        - date_time
+    Seat:
+      type: object
+      properties:
+        id:
+          type: integer
+        room_id:
+          type: integer
+        seat_identifier:
+          type: string
+      required:
+        - room_id
+        - seat_identifier
+    Reservation:
+      type: object
+      properties:
+        id:
+          type: integer
+        schedule_id:
+          type: integer
+        user_name:
+          type: string
+        email:
+          type: string
+        reserved_at:
+          type: string
+      required:
+        - schedule_id
+        - user_name
+        - email
+    ReservedSeat:
+      type: object
+      properties:
+        id:
+          type: integer
+        reservation_id:
+          type: integer
+        seat_id:
+          type: integer
+      required:
+        - reservation_id
+        - seat_id
