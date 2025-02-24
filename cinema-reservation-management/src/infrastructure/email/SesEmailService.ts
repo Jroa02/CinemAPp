@@ -10,7 +10,9 @@ export const sendEmail = async (
     to, 
     subject, 
     text: body,
+    /*
     html: "<h1>Hola</h1><p>Este es un correo HTML.</p>",
+    */
   };
   try {
     const info = await transporter.sendMail(mailOptions);

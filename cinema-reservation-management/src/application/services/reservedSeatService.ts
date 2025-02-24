@@ -86,10 +86,10 @@ export class ReservedSeatService {
         }
     }
 
-    async delete(id: number): Promise<void> {
+    async delete(reservation_id: number, seat_id: number ): Promise<void> {
         try {
-            await this.reservedSeatRepository.delete(id);
-            console.log('Asiento Reservado Eliminado');
+            await this.reservedSeatRepository.delete(reservation_id, seat_id);
+            console.log(`Asiento ID ${seat_id} de la Reserva ID ${reservation_id} eliminado`);
             return
         } catch (error: any) {
             console.log('Error ', error);

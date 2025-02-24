@@ -55,7 +55,19 @@ export class ScheduleRepository implements IScheduleRepository {
 
     async getAll(): Promise<Schedule[]> {
         try {
-            const query = `SELECT id,movie_id,room_id, TO_CHAR(date_time, 'YYYY-MM-DD HH24:MI:SS') AS date_time FROM schedule ORDER BY room_id ASC;`;
+            const query = `
+            SELECT 
+            s.id AS schedule_id,
+            TO_CHAR(s.date_time, 'YYYY-MM-DD HH24:MI:SS') AS date_time,
+            r.name AS room_name,  -- Incluir el nombre de la sala
+            r.id as room_id,
+            m.title AS movie_title,
+            m.duration,
+            m.classification
+            FROM schedule s
+            JOIN room r ON s.room_id = r.id
+            JOIN movie m ON s.movie_id = m.id;
+            `;
             const result = await this.client.query(query);
             this.validateRowCount(result, 'No se encontraron horarios', 404);
             return result.rows;

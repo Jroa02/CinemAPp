@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { ReservedSeatService } from './../services/reservedSeatService';
 import { ReservedSeat } from './../../domain/entities/ReservedSeat';
 import { get } from 'http';
+import { parse } from 'path';
 
 const reservedSeatService = new ReservedSeatService();
 
@@ -64,7 +65,7 @@ export const ReservedSeatsController = {
 
     delete: async (req: Request, res: Response) => {
         try {
-            await reservedSeatService.delete(parseInt(req.params.id));
+            await reservedSeatService.delete(parseInt(req.params.reservation_id),parseInt(req.params.seat_id));
             res.status(204).send();
         } catch (error: any) {
             res.status(error.status || 500).send();

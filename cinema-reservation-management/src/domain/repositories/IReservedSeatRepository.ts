@@ -5,5 +5,5 @@ export interface IReservedSeatRepository {
     getAll(schedule_id: number): Promise<ReservedSeat[]>;
     getById(id: number): Promise<ReservedSeat | undefined>;
     update(id: number, reservedSeat: Partial<ReservedSeat>): Promise<ReservedSeat | undefined>;
-    delete(id: number): Promise<void>;
+    delete(reservation_id: number, seat_id:number): Promise<void>;
 }

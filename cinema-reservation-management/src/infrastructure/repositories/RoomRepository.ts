@@ -35,7 +35,7 @@ export class RoomRepository implements IRoomRepository {
             this.validateRowCount(result, 'No se pudo crear la sala', 500);
             return result.rows[0];
         } catch (error: any) {
-            console.error('Error en el repositorio al crear la sala:', error);
+            console.log('Error en el repositorio al crear la sala:', error);
             throw error;
         }
     }
@@ -47,7 +47,7 @@ export class RoomRepository implements IRoomRepository {
             this.validateRowCount(result, 'No se encontraron salas', 404);
             return result.rows;
         } catch (error: any) {
-            console.error('Error en el repositorio al obtener las salas:', error);
+            console.log('Error en el repositorio al obtener las salas:', error);
             throw error;
         }
     }
@@ -59,7 +59,7 @@ export class RoomRepository implements IRoomRepository {
             this.validateRowCount(result, `No se encontró una sala con el ID: ${id}`, 404);
             return result.rows[0];
         } catch (error: any) {
-            console.error('Error en el repositorio al obtener la sala:', error);
+            console.log('Error en el repositorio al obtener la sala:', error);
             throw error;
         }
     }
@@ -78,18 +78,22 @@ export class RoomRepository implements IRoomRepository {
             this.validateRowCount(result, `No se encontró una sala con el ID: ${id}`, 404);
             return result.rows[0];
         } catch (error: any) {
-            console.error('Error en el repositorio al actualizar la sala:', error);
+            console.log('Error en el repositorio al actualizar la sala:', error);
             throw error;
         }
     }
 
     async delete(id: number): Promise<void> {
         try {
+            const deleteSeats = `DELETE FROM seat WHERE room_id = $1;`;
+            const deleteSeatsRS = await this.client.query(deleteSeats, [id]);
+            this.validateRowCount(deleteSeatsRS, `No se encontraron asientos para la sala con el ID: ${id}`, 404);
             const query = `DELETE FROM room WHERE id = $1;`;
             const result = await this.client.query(query, [id]);
             this.validateRowCount(result, `No se encontró una sala con el ID: ${id}`, 404);
+            return
         } catch (error: any) {
-            console.error('Error en el repositorio al eliminar la sala:', error);
+            console.log('Error en el repositorio al eliminar la sala:', error);
             throw error;
         }
     }

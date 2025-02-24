@@ -14,7 +14,7 @@ export class SeatService {
             console.log('Asiento creado:', response);
             return response;
         } catch (error: any) {
-            console.error('Error al crear el asiento:', error);
+            console.log('Error al crear el asiento:', error);
             throw error
         }
     }
@@ -25,7 +25,7 @@ export class SeatService {
             console.log('Asientos obtenidos:', seats);
             return seats;
         } catch (error: any) {
-            console.error('Error al obtener los asientos:', error);
+            console.log('Error al obtener los asientos:', error);
             throw error
         }
     }
@@ -36,9 +36,21 @@ export class SeatService {
             console.log('Asiento obtenido:', seat);
             return seat;
         } catch (error: any) {
-            console.error('Error al obtener el asiento:', error);
+            console.log('Error al obtener el asiento:', error);
             throw error
         }
+    }
+
+    async getReservedSeats(schedule_id: number): Promise<object> {
+        try {
+            const seats = await this.seatRepository.getReservedSeats(schedule_id);
+            console.log('Asientos reservados obtenidos:', seats);
+            return seats;
+        } catch (error: any) {
+            console.log('Error al obtener los asientos reservados:', error);
+            throw error
+        }
+
     }
 
     async update(id: number, seat: Partial<Seat>): Promise<Seat | undefined> {
@@ -47,7 +59,7 @@ export class SeatService {
             console.log('Asiento actualizado:', response);
             return response;
         } catch (error: any) {
-            console.error('Error al actualizar el asiento:', error);
+            console.log('Error al actualizar el asiento:', error);
             throw error
         }
     }
@@ -58,7 +70,7 @@ export class SeatService {
             console.log('Asiento eliminado:', id);
             return;
         } catch (error: any) {
-            console.error('Error al eliminar el asiento:', error);
+            console.log('Error al eliminar el asiento:', error);
             throw error
         }
     }
@@ -69,7 +81,7 @@ export class SeatService {
             console.log('Asientos eliminados de la sala:', room_id);
             return;
         } catch (error: any) {
-            console.error('Error al eliminar los asientos de la sala:', error);
+            console.log('Error al eliminar los asientos de la sala:', error);
             throw error
         }
 

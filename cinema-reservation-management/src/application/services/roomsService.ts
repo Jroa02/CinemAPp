@@ -37,7 +37,7 @@ export class RoomService {
             console.log('Sala creada con asientos:', response);
             return response;
         } catch (error: any) {
-            console.error('Error al crear la sala:', error);
+            console.log('Error al crear la sala:', error);
             throw error
         }
     }
@@ -48,7 +48,7 @@ export class RoomService {
             console.log('Salas obtenidas:', rooms);
             return rooms;
         } catch (error: any) {
-            console.error('Error al obtener las salas:', error);
+            console.log('Error al obtener las salas:', error);
             throw error
         }
     }
@@ -59,7 +59,7 @@ export class RoomService {
             console.log('Sala obtenida:', room);
             return room;
         } catch (error: any) {
-            console.error('Error al obtener la sala:', error);
+            console.log('Error al obtener la sala:', error);
             throw error
         }
     }
@@ -70,18 +70,18 @@ export class RoomService {
             console.log('Sala actualizada:', response);
             return response;
         } catch (error: any) {
-            console.error('Error al actualizar la sala:', error);
+            console.log('Error al actualizar la sala:', error);
             throw error
         }
     }
 
     async delete(id: number): Promise<void> {
         try {
-            await this.seatService.deleteByRoom(id);
             await this.roomRepository.delete(id);
             console.log('Sala eliminada:', id);
+            return
         } catch (error: any) {
-            console.error('Error al eliminar la sala:', error);
+            console.log('Error al eliminar la sala:', error);
             throw error
         }
     }

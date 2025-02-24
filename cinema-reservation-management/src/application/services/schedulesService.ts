@@ -22,10 +22,10 @@ export class ScheduleService {
     async getAll(): Promise<Schedule[]> {
         try {
             const schedules = await this.scheduleRepository.getAll();
-            console.log('Horarios obtenidos!!',schedules);
+            console.log('Funciones obtenidos!!',schedules);
             return schedules;
         } catch (error: any) {
-            console.error('Error al obtener los horarios:', error);
+            console.error('Error al obtener los Funciones:', error);
             throw error
         }
     }

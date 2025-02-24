@@ -117,11 +117,11 @@ export class ReservedSeatRepository implements IReservedSeatRepository {
         }
     }
 
-    async delete(id: number): Promise<void> {
+    async delete(reservation_id: number, seat_id : number): Promise<void> {
         try {
-            const query = `DELETE FROM reservedseat WHERE id = $1;`;
-            const result = await this.client.query(query, [id]);
-            this.validateRowCount(result, `No se encontró un asiento reservado con el ID: ${id}`, 404);
+            const query = `DELETE FROM reservedseat WHERE reservation_id = $1 AND seat_id = $2;`;
+            const result = await this.client.query(query, [reservation_id, seat_id ]);
+            this.validateRowCount(result, `No se encontró el asiento ${seat_id } con la Reservación ID: ${reservation_id}`, 404);
         } catch (error: any) {
             throw error;
         }

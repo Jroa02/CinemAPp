@@ -12,7 +12,7 @@ export class SeatRepository implements ISeatRepository {
         }
     }
 
-    private async validateSeat(seat: Omit<Seat,'id'>): Promise<boolean> {  
+    private async validateSeat(seat: Omit<Seat, 'id'>): Promise<boolean> {
         const query = `SELECT * FROM seat WHERE room_id = $1 AND seat_identifier = $2;`;
         const values = [seat.room_id, seat.seat_identifier];
         const result = await this.client.query(query, values);
@@ -37,14 +37,14 @@ export class SeatRepository implements ISeatRepository {
             this.validateRowCount(result, 'No se pudo crear el asiento', 500);
             return result.rows[0];
         } catch (error: any) {
-            console.error('Error en el repositorio al crear el asiento:', error);
+            console.log('Error en el repositorio al crear el asiento:', error);
             throw error;
         }
     }
 
-    async getAll(id:number): Promise<Seat[]> {
+    async getAll(id: number): Promise<Seat[]> {
         try {
-            if(id === 0){
+            if (id === 0) {
                 const query = `SELECT * FROM seat;`;
                 const result = await this.client.query(query);
                 this.validateRowCount(result, 'No se encontraron asientos', 404);
@@ -52,11 +52,11 @@ export class SeatRepository implements ISeatRepository {
             }
             // Consulta para obtener los asientos de una sala específica
             const query = `SELECT * FROM seat WHERE room_id = $1;`;
-            const result = await this.client.query(query,[id]);
+            const result = await this.client.query(query, [id]);
             this.validateRowCount(result, 'No se encontraron asientos', 404);
             return result.rows;
         } catch (error: any) {
-            console.error('Error en el repositorio al obtener los asientos:', error);
+            console.log('Error en el repositorio al obtener los asientos:', error);
             throw error;
         }
     }
@@ -68,15 +68,41 @@ export class SeatRepository implements ISeatRepository {
             this.validateRowCount(result, `No se encontró un asiento con el ID: ${id}`, 404);
             return result.rows[0];
         } catch (error: any) {
-            console.error('Error en el repositorio al obtener el asiento:', error);
+            console.log('Error en el repositorio al obtener el asiento:', error);
             throw error;
         }
+    }
+
+    async getReservedSeats(schedule_id: number) {
+        try {
+            const query = `
+            SELECT 
+            Seat.id,
+            Seat.seat_identifier
+            FROM 
+            Reservation
+            JOIN 
+            ReservedSeat ON Reservation.id = ReservedSeat.reservation_id
+            JOIN 
+            Seat ON ReservedSeat.seat_id = Seat.id
+            WHERE   
+            Reservation.schedule_id = $1;
+            `;
+            const result = await this.client.query(query, [schedule_id]);
+            this.validateRowCount(result, `No se encontró asientos reservados para la funcion ID: ${schedule_id}`, 404);
+            return result.rows;
+        } catch (error) {
+            console.log('Error en el repositorio al obtener asientos reservados:', error);
+            throw error;
+        }
+
+
     }
 
     async update(id: number, seat: Partial<Seat>): Promise<Seat | undefined> {
         try {
 
-            const existSeat = await this.validateSeat(seat as Omit<Seat,'id'>);
+            const existSeat = await this.validateSeat(seat as Omit<Seat, 'id'>);
             if (existSeat) {
                 throw { message: 'El asiento ya existe', status: 400 };
             }
@@ -93,7 +119,7 @@ export class SeatRepository implements ISeatRepository {
             this.validateRowCount(result, `No se encontró un asiento con el ID: ${id}`, 404);
             return result.rows[0];
         } catch (error: any) {
-            console.error('Error en el repositorio al actualizar el asiento:', error);
+            console.log('Error en el repositorio al actualizar el asiento:', error);
             throw error;
         }
     }
@@ -103,8 +129,9 @@ export class SeatRepository implements ISeatRepository {
             const query = `DELETE FROM seat WHERE id = $1;`;
             const result = await this.client.query(query, [id]);
             this.validateRowCount(result, `No se encontró un asiento con el ID: ${id}`, 404);
+            return
         } catch (error: any) {
-            console.error('Error en el repositorio al eliminar el asiento:', error);
+            console.log('Error en el repositorio al eliminar el asiento:', error);
             throw error;
         }
     }
@@ -112,11 +139,12 @@ export class SeatRepository implements ISeatRepository {
     async deleteByRoom(room_id: number): Promise<void> {
         try {
             const query = `DELETE FROM seat WHERE room_id = $1;`;
-            const result =  this.client.query(query, [room_id]);
+            const result = this.client.query(query, [room_id]);
             this.validateRowCount(result, `No se encontraron asientos para la sala con el ID: ${room_id}`, 404);
+            return
         } catch (error: any) {
             console.log('Error al eliminar los asientos de la sala:', error);
-            throw error;    
+            throw error;
         }
     }
 }

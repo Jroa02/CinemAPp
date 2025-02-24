@@ -38,6 +38,15 @@ export const SeatsController = {
         }
     },
 
+    getReservedSeats: async (req: Request, res: Response) => {
+        try {
+            const seats = await seatService.getReservedSeats(parseInt(req.params.schedule_id));
+            res.status(200).json(seats);
+        } catch (error: any) {
+            res.status(error.status || 500).send();
+        }
+    },
+
     update: async (req: Request, res: Response) => {
         try {
             const updatedSeat = await seatService.update(parseInt(req.params.id), req.body);

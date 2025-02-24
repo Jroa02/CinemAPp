@@ -3,9 +3,9 @@ export class Reservation {
     schedule_id: number;
     user_name: string;
     email: string;
-    reserved_at?: Date;
+    reserved_at?: string;
 
-    constructor(id: number, schedule_id: number, user_name: string, email: string, reserved_at?: Date) {
+    constructor(id: number, schedule_id: number, user_name: string, email: string, reserved_at?: string) {
         this.id = id;
         this.schedule_id = schedule_id;
         this.user_name = user_name;

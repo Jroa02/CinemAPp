@@ -7,12 +7,14 @@ const reservationRepository = new ReservationRepository();
 const reservationService = new ReservationService(reservationRepository);
 
 export const ReservationsController = {
+
+
     create: async (req: Request, res: Response) => {
         try {
             const { schedule_id, user_name, email, reserved_at } = req.body;
             const reservation = new Reservation(0, schedule_id, user_name, email); // ID se genera automáticamente
-            await reservationService.create(reservation);
-            res.status(201).send();
+            let reservationRS = await reservationService.create(reservation);
+            res.status(200).json(reservationRS);
         } catch (error: any) {
             res.status(error.status || 500).send();
         }
@@ -21,22 +23,7 @@ export const ReservationsController = {
     getAll: async (req: Request, res: Response) => {
         try {
             const reservations = await reservationService.getAll();
-            // UTC local Date
-            const userTimeZone = 'America/Bogota';
-            const reservationsWithLocalTime = reservations.map(reservation => {
-                const reservedAtLocal = reservation.reserved_at ? new Date(reservation.reserved_at).toLocaleString('es-CO', {
-                    timeZone: userTimeZone,
-                    dateStyle: 'full', 
-                    timeStyle: 'medium', 
-                }):null;
-                return {
-                    ...reservation,
-                    reserved_at: reservedAtLocal
-                };
-            });
-
-            // Devolver las reservas con la hora convertida
-            res.status(200).json(reservationsWithLocalTime);
+            res.status(200).json(reservations);
         } catch (error: any) {
             res.status(error.status || 500).send();
         }
@@ -48,16 +35,21 @@ export const ReservationsController = {
             if (!reservation) {
                 return res.status(404).send();
             }
-            // UTC local Date
-            const userTimeZone = 'America/Bogota';
-            const reservedAtLocal = reservation.reserved_at
-                ? new Date(reservation.reserved_at).toLocaleString('es-CO', {
-                    timeZone: userTimeZone,
-                    dateStyle: 'full',
-                    timeStyle: 'medium',
-                })
-                : null;
-            res.status(200).json({ ...reservation, reserved_at: reservedAtLocal })
+            
+            res.status(200).json(reservation)
+        } catch (error: any) {
+            res.status(error.status || 500).send();
+        }
+    },
+
+    getDetails: async (req: Request, res: Response) => {
+        try {
+            const reservation = await reservationService.getDetail(parseInt(req.params.reservation_id ));
+            if (!reservation) {
+                return res.status(404).send();
+            }
+            
+            res.status(200).json(reservation)
         } catch (error: any) {
             res.status(error.status || 500).send();
         }
