@@ -4,8 +4,7 @@ CinemApp es una aplicación de reserva de cine que permite a los usuarios gestio
 
 ## Requisitos previos
 
-- Node.js (v14 o superior)
-- npm (v6 o superior)
+- Node.js (v20 o superior)
 
 ## Estructura del proyecto
 
