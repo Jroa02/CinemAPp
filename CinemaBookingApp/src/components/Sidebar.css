@@ -1,0 +1,25 @@
+.sidebar {
+  height: 100vh; 
+  background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%);
+  padding: 20px;
+  overflow-y: auto;
+  position: fixed; 
+  width: 15%;
+  top: 0; 
+  left: 0; 
+}
+
+.sidebar .nav-link {
+  color: #d0e1ff;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #d0e1ff;
+}
+
+.sidebar h4 {
+  font-weight: bold;
+  color: #d0e1ff;
+}

@@ -1,0 +1,29 @@
+@import 'bootstrap-icons/font/bootstrap-icons.css';
+
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+    background-color: #121212; /* Fondo oscuro */
+    color: #ffffff; /* Texto claro */
+  }
+  
+  .bg-dark {
+    background-color: #1e1e1e !important; /* Fondo oscuro personalizado */
+  }
+  
+  .text-light {
+    color: #ffffff !important; /* Texto claro */
+  }
+  
+  .min-vh-100 {
+    min-height: 100vh;
+  }
+  
+  /* Ajustes para tablas y otros componentes */
+  .table {
+    color: #ffffff !important;
+  }
+  
+  .table-dark {
+    background-color: #1e1e1e !important;
+  }

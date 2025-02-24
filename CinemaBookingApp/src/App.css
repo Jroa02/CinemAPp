@@ -1,0 +1,43 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body, html {
+  height: 100%;
+  overflow-x: hidden;
+}
+
+.container-fluid {
+  padding-left: 16%; 
+}
+
+.row {
+  margin-left: 0;
+  margin-right: 0;
+}
+
+
+
+/* Estilos para el tema oscuro */
+.dark-theme {
+  background-color: #333;
+  color: #fff;
+  border: 1px solid #444;
+}
+
+.dark-theme .card-body {
+  background-color: #444;
+  color: #fff;
+}
+
+.dark-theme .btn-outline-primary {
+  border-color: #0d6efd;
+  color: #0d6efd;
+}
+
+.dark-theme .btn-outline-primary:hover {
+  background-color: #0d6efd;
+  color: #fff;
+}
