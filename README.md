@@ -29,7 +29,7 @@ cd cinema-reservation-management
 npm install
 ```
 
-Crea un archivo `.env` en el directorio `CinemaBookingAPI` y agrega las siguientes variables de entorno:
+Crea un archivo `.env` en el directorio `cinema-reservation-management` y agrega las siguientes variables de entorno:
 
 ```
 DB_USER=postgres
@@ -100,6 +100,9 @@ La aplicación frontend estará ejecutándose en `http://localhost:5173/`.
 - `GET /reservations`: Obtener todas las reservas
 - `POST /reservations`: Crear una nueva reserva
 - `DELETE /reservations/:id`: Eliminar una reserva
+
+### Diagrama DB
+![CinemApp Screenshot](./resource/DiagramaDB.png)
 
 ## Contribuyendo
 
